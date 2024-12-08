@@ -1,8 +1,7 @@
 package com.vishal.springbootwebtutorial.springbootwebtutorial.Controllers;
 
 
-import com.vishal.springbootwebtutorial.springbootwebtutorial.Entities.EmployeeDTO;
-import org.springframework.stereotype.Controller;
+import com.vishal.springbootwebtutorial.springbootwebtutorial.DTO.EmployeeDTO;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;

@@ -1,4 +1,4 @@
-package com.vishal.springbootwebtutorial.springbootwebtutorial.Entities;
+package com.vishal.springbootwebtutorial.springbootwebtutorial.DTO;
 
 import java.time.LocalDate;
 
