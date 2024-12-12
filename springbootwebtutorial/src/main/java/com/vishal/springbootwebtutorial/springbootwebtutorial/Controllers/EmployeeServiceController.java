@@ -2,13 +2,15 @@ package com.vishal.springbootwebtutorial.springbootwebtutorial.Controllers;
 
 import com.vishal.springbootwebtutorial.springbootwebtutorial.DTO.EmployeeDTO;
 import com.vishal.springbootwebtutorial.springbootwebtutorial.Entities.EmployeeEntity;
+import com.vishal.springbootwebtutorial.springbootwebtutorial.Exception.ResourceNotFoundException;
 import com.vishal.springbootwebtutorial.springbootwebtutorial.Services.EmpService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
+import jakarta.validation.Valid;
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 
@@ -26,13 +28,12 @@ public class EmployeeServiceController {
     @GetMapping(path = "/{employeeID}")
     public ResponseEntity<EmployeeDTO> getEmployeeById(@PathVariable(name = "employeeID") Long id){
         Optional<EmployeeDTO> employeeDTO =  empService.getEmployeeById(id);
-        return employeeDTO.map(employeeDTO1 -> ResponseEntity.ok(employeeDTO1)).orElse(ResponseEntity.notFound()
-                .build());
-
+        return employeeDTO.map(employeeDTO1 -> ResponseEntity.ok(employeeDTO1))
+                .orElseThrow(() -> new ResourceNotFoundException("Employee Not Found "));
     }
 
     @PostMapping(path = "/CreateNewEmployee")
-    public ResponseEntity<EmployeeDTO> CreateNewEmployee(@RequestBody EmployeeEntity employeeEntity){
+    public ResponseEntity<EmployeeDTO> CreateNewEmployee(@RequestBody @Valid EmployeeEntity employeeEntity){
       //  return empService.save(employeeEntity);
         EmployeeDTO savedEmployee = empService.save(employeeEntity);
         return new ResponseEntity<>(savedEmployee, HttpStatus.CREATED);
@@ -68,7 +69,6 @@ public class EmployeeServiceController {
          if (employeeDTO == null ) return ResponseEntity.notFound().build();
          return ResponseEntity.ok(employeeDTO);
         }
-
 
     }
 
